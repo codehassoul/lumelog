@@ -52,10 +52,6 @@ function joinPlain(prefix, body) {
   return out;
 }
 
-function styleLine(tone, line, preStyled) {
-  return preStyled ? line : tone(line);
-}
-
 /**
  * Leveled line(s). When useAnsi is false (non-TTY, NO_COLOR, FORCE_COLOR=0),
  * skips Chalk entirely. Single-line bodies skip split().
@@ -75,14 +71,14 @@ export function colorize(kind, body, options = {}) {
   const nl = body.indexOf("\n");
   const badge = tone.bold(symbol + " " + labelPadded) + MESSAGE_GAP;
   if (nl === -1) {
-    return badge + styleLine(tone, body, preStyled);
+    return badge + body;
   }
 
   const pad = " ".repeat(prefix.length);
   const lines = body.split("\n");
-  let out = badge + styleLine(tone, lines[0], preStyled);
+  let out = badge + lines[0];
   for (let i = 1; i < lines.length; i++) {
-    out += "\n" + pad + styleLine(tone, lines[i], preStyled);
+    out += "\n" + pad + lines[i];
   }
   return out;
 }
@@ -92,7 +88,6 @@ export function colorize(kind, body, options = {}) {
  * `preStyled`: skip gray wrapper when body uses util.inspect colors.
  */
 export function colorizePlain(body, messageStart, options = {}) {
-  const preStyled = options.preStyled === true;
   const pad = messageStart > 0 ? " ".repeat(messageStart) : "";
 
   if (!useAnsi) {
@@ -109,12 +104,12 @@ export function colorizePlain(body, messageStart, options = {}) {
 
   const nl = body.indexOf("\n");
   if (nl === -1) {
-    return pad + (preStyled ? body : chalk.gray(body));
+    return pad + body;
   }
   const lines = body.split("\n");
-  let out = pad + (preStyled ? lines[0] : chalk.gray(lines[0]));
+  let out = pad + lines[0];
   for (let i = 1; i < lines.length; i++) {
-    out += "\n" + pad + (preStyled ? lines[i] : chalk.gray(lines[i]));
+    out += "\n" + pad + lines[i];
   }
   return out;
 }

@@ -171,7 +171,7 @@ function createLogger(scope, childMetadata) {
       return;
     }
     timers.delete(key);
-    const ms = Math.round(performance.now() - start);
+    const ms = Math.max(0, Math.floor(performance.now() - start));
     if (!shouldWrite("done")) return;
     write(formatLevel("done", `${key} completed in ${ms}ms`, scope), "stdout");
   };

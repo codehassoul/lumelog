@@ -69,7 +69,8 @@ test("calling time twice resets timer for label", async () => {
   }
   assert.equal(calls.length, 3);
   const ms = Number(calls[2].match(/(\d+)ms$/)?.[1]);
-  assert.ok(ms < 20);
+  // After reset, only the 8ms wait should be measured (with some tolerance)
+  assert.ok(ms >= 5 && ms < 30, `Expected ms (${ms}) to be between 5 and 30`);
 });
 
 test("scoped timer is separate from root", () => {

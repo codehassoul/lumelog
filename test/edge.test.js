@@ -76,10 +76,14 @@ test("Error without stack uses name and message", () => {
   assert.ok(!plain.includes("at "));
 });
 
-test("when chalk has no color (piped / NO_COLOR), output has no ANSI", {
-  skip: chalk.level !== 0,
-}, () => {
-  const line = formatLevel("info", "piped");
-  assert.match(line, /^ℹ INFO\s+piped$/);
-  assert.equal(line, stripAnsi(line));
+test("when chalk has no color (piped / NO_COLOR), output has no ANSI", () => {
+  const originalLevel = chalk.level;
+  try {
+    chalk.level = 0; // Force no color
+    const line = formatLevel("info", "piped");
+    assert.match(line, /^ℹ INFO\s+piped$/);
+    assert.equal(line, stripAnsi(line));
+  } finally {
+    chalk.level = originalLevel; // Restore original level
+  }
 });

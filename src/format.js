@@ -1,5 +1,5 @@
 import { formatWithOptions, inspect } from "node:util";
-import { colorize, colorizePlain, isAnsiEnabled } from "./colors.js";
+import { colorize, colorizePlain } from "./colors.js";
 import { MESSAGE_START } from "./symbols.js";
 
 /** Cap serialized body size to avoid blocking the event loop on huge logs. */
@@ -19,11 +19,6 @@ const INSPECT_OBJECT = Object.freeze({
 });
 
 /** Same limits with Node’s syntax highlighting (keys/types/values). */
-const INSPECT_OBJECT_COLOR = Object.freeze({
-  ...INSPECT_OBJECT,
-  colors: true,
-});
-
 /** Fallback inspect when formatting throws. */
 const INSPECT_SHALLOW = Object.freeze({
   depth: 2,
@@ -38,11 +33,6 @@ const INSPECT_METADATA = Object.freeze({
   breakLength: Infinity,
   compact: true,
   colors: false,
-});
-
-const INSPECT_METADATA_COLOR = Object.freeze({
-  ...INSPECT_METADATA,
-  colors: true,
 });
 
 function maybeTruncate(text) {
@@ -102,13 +92,8 @@ function serializeRaw(message) {
       };
     }
     if (typeof message === "object") {
-      const colors = isAnsiEnabled();
       try {
-        const text = inspect(
-          message,
-          colors ? INSPECT_OBJECT_COLOR : INSPECT_OBJECT,
-        );
-        return colors ? { value: text, styled: true } : text;
+        return inspect(message, INSPECT_OBJECT);
       } catch {
         return inspect(message, INSPECT_SHALLOW);
       }
@@ -163,14 +148,12 @@ function serializeArgs(args) {
 
 function formatPlainConsoleArgs(args) {
   const { messageArgs, metadata } = splitMetadata(args);
-  const colors = isAnsiEnabled();
-  const options = colors ? INSPECT_OBJECT_COLOR : INSPECT_OBJECT;
 
   try {
-    const text = maybeTruncate(formatWithOptions(options, ...messageArgs));
+    const text = maybeTruncate(formatWithOptions(INSPECT_OBJECT, ...messageArgs));
     return withMetadata({
       text,
-      styled: colors,
+      styled: false,
       jsonMessage: text,
     }, metadata);
   } catch {
@@ -199,9 +182,7 @@ function splitMetadata(args) {
 
 function formatMetadata(metadata) {
   if (metadata === undefined) return undefined;
-  const colors = isAnsiEnabled();
-  const options = colors ? INSPECT_METADATA_COLOR : INSPECT_METADATA;
-  return maybeTruncate(inspect(metadata, options));
+  return maybeTruncate(inspect(metadata, INSPECT_METADATA));
 }
 
 function appendMetadata(text, metadataText) {
