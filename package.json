@@ -7,11 +7,11 @@
   "types": "src/index.d.ts",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codehassoul/logra.git"
+    "url": "git+https://github.com/codehassoul/lumelog.git"
   },
-  "homepage": "https://github.com/codehassoul/logra#readme",
+  "homepage": "https://github.com/codehassoul/lumelog#readme",
   "bugs": {
-    "url": "https://github.com/codehassoul/logra/issues"
+    "url": "https://github.com/codehassoul/lumelog/issues"
   },
   "sideEffects": false,
   "exports": {

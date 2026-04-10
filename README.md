@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/lumelog.svg)](https://www.npmjs.com/package/lumelog)
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-339933)
-[![test](https://github.com/codehassoul/logra/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/codehassoul/logra/actions/workflows/test.yml)
+[![test](https://github.com/codehassoul/lumelog/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/codehassoul/lumelog/actions/workflows/test.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 Better `console.log` for Node.js.
