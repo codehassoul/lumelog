@@ -41,43 +41,43 @@ test("log.levels returns all supported levels", () => {
 });
 
 test("log.level returns resolved current level", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "success";
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "success";
   try {
     assert.equal(log.level(), "info");
   } finally {
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
 });
 
-test("LOGRA_TIME=1 prefixes emitted lines with [HH:mm:ss]", () => {
-  const prev = process.env.LOGRA_TIME;
-  process.env.LOGRA_TIME = "1";
+test("LUMELOG_TIME=1 prefixes emitted lines with [HH:mm:ss]", () => {
+  const prev = process.env.LUMELOG_TIME;
+  process.env.LUMELOG_TIME = "1";
   const calls = [];
   const restore = captureConsole(calls);
   try {
     log.info("hello");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_TIME;
-    else process.env.LOGRA_TIME = prev;
+    if (prev === undefined) delete process.env.LUMELOG_TIME;
+    else process.env.LUMELOG_TIME = prev;
   }
   assert.equal(calls.length, 1);
   assert.match(calls[0], /^\[\d{2}:\d{2}:\d{2}\] /);
 });
 
-test("LOGRA_JSON=1 emits JSON through the logger", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+test("LUMELOG_JSON=1 emits JSON through the logger", () => {
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   const calls = [];
   const restore = captureConsole(calls);
   try {
     log.scope("API").warn("slow");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
   assert.equal(calls.length, 1);
   assert.deepEqual(JSON.parse(calls[0]), {
@@ -87,9 +87,9 @@ test("LOGRA_JSON=1 emits JSON through the logger", () => {
   });
 });
 
-test("LOGRA_LEVEL=warn only emits warn and error", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "warn";
+test("LUMELOG_LEVEL=warn only emits warn and error", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "warn";
   const calls = [];
   const restore = captureConsole(calls);
   try {
@@ -101,17 +101,17 @@ test("LOGRA_LEVEL=warn only emits warn and error", () => {
     log.error("boom");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 2);
   assert.match(calls[0], /WARN/);
   assert.match(calls[1], /ERROR/);
 });
 
-test("invalid LOGRA_LEVEL leaves logging unchanged", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "verbose";
+test("invalid LUMELOG_LEVEL leaves logging unchanged", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "verbose";
   const calls = [];
   const restore = captureConsole(calls);
   try {
@@ -120,15 +120,15 @@ test("invalid LOGRA_LEVEL leaves logging unchanged", () => {
     log.step("work");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 2);
 });
 
-test("LOGRA_LEVEL=success behaves like info", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "success";
+test("LUMELOG_LEVEL=success behaves like info", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "success";
   const calls = [];
   const restore = captureConsole(calls);
   try {
@@ -137,17 +137,17 @@ test("LOGRA_LEVEL=success behaves like info", () => {
     log.step("build");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 2);
   assert.match(calls[0], /INFO/);
   assert.match(calls[1], /SUCCESS/);
 });
 
-test("LOGRA_LEVEL=time behaves like step", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "time";
+test("LUMELOG_LEVEL=time behaves like step", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "time";
   const calls = [];
   const restore = captureConsole(calls);
   try {
@@ -155,8 +155,8 @@ test("LOGRA_LEVEL=time behaves like step", () => {
     log.time("fetch");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 2);
   assert.match(calls[0], /STEP/);
@@ -227,17 +227,17 @@ test("single object argument is still treated as the message", () => {
   assert.match(calls[0], /userId:\s*123/);
 });
 
-test("LOGRA_JSON=1 includes trailing metadata as structured fields", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+test("LUMELOG_JSON=1 includes trailing metadata as structured fields", () => {
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   const calls = [];
   const restore = captureConsole(calls);
   try {
     log.info("User fetched", { userId: 123, ok: true });
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
   assert.equal(calls.length, 1);
   assert.deepEqual(JSON.parse(calls[0]), {
@@ -262,16 +262,16 @@ test("child logger includes metadata in pretty output", () => {
 });
 
 test("child logger includes metadata in JSON output", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   const calls = [];
   const restore = captureConsole(calls);
   try {
     log.child({ requestId: "123" }).info("User fetched");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
   assert.equal(calls.length, 1);
   assert.deepEqual(JSON.parse(calls[0]), {
@@ -282,8 +282,8 @@ test("child logger includes metadata in JSON output", () => {
 });
 
 test("child logger shallow-merges with trailing metadata", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   const calls = [];
   const restore = captureConsole(calls);
   try {
@@ -291,8 +291,8 @@ test("child logger shallow-merges with trailing metadata", () => {
       .info("User fetched", { requestId: "456", userId: 7 });
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
   assert.equal(calls.length, 1);
   assert.deepEqual(JSON.parse(calls[0]), {

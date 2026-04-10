@@ -143,9 +143,9 @@ test("formatPlainArgs keeps message text clean with trailing metadata", () => {
   );
 });
 
-test("LOGRA_JSON=1 emits one JSON object per line", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+test("LUMELOG_JSON=1 emits one JSON object per line", () => {
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   try {
     const line = formatLevel("info", "Listening on port 3000", "API");
     const parsed = JSON.parse(line);
@@ -155,14 +155,14 @@ test("LOGRA_JSON=1 emits one JSON object per line", () => {
       scope: "API",
     });
   } finally {
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
 });
 
-test("LOGRA_JSON=1 includes metadata as structured fields", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+test("LUMELOG_JSON=1 includes metadata as structured fields", () => {
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   try {
     const parsed = JSON.parse(
       formatLevelArgs("info", ["User fetched", { userId: 123, ok: true }]),
@@ -174,14 +174,14 @@ test("LOGRA_JSON=1 includes metadata as structured fields", () => {
       ok: true,
     });
   } finally {
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
 });
 
-test("LOGRA_JSON=1 includes stack for errors", () => {
-  const prev = process.env.LOGRA_JSON;
-  process.env.LOGRA_JSON = "1";
+test("LUMELOG_JSON=1 includes stack for errors", () => {
+  const prev = process.env.LUMELOG_JSON;
+  process.env.LUMELOG_JSON = "1";
   try {
     const err = new Error("boom");
     err.stack = [
@@ -197,25 +197,25 @@ test("LOGRA_JSON=1 includes stack for errors", () => {
     assert.match(parsed.stack, /C:\/app\/task\.js:10:5/);
     assert.doesNotMatch(parsed.stack, /node:internal\/modules\/run_main/);
   } finally {
-    if (prev === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prev;
+    if (prev === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prev;
   }
 });
 
-test("LOGRA_JSON=1 and LOGRA_TIME=1 include timestamp", () => {
-  const prevJson = process.env.LOGRA_JSON;
-  const prevTime = process.env.LOGRA_TIME;
-  process.env.LOGRA_JSON = "1";
-  process.env.LOGRA_TIME = "1";
+test("LUMELOG_JSON=1 and LUMELOG_TIME=1 include timestamp", () => {
+  const prevJson = process.env.LUMELOG_JSON;
+  const prevTime = process.env.LUMELOG_TIME;
+  process.env.LUMELOG_JSON = "1";
+  process.env.LUMELOG_TIME = "1";
   try {
     const parsed = JSON.parse(formatPlain("hello"));
     assert.equal(parsed.level, "log");
     assert.equal(parsed.message, "hello");
     assert.match(parsed.timestamp, /^\d{2}:\d{2}:\d{2}$/);
   } finally {
-    if (prevJson === undefined) delete process.env.LOGRA_JSON;
-    else process.env.LOGRA_JSON = prevJson;
-    if (prevTime === undefined) delete process.env.LOGRA_TIME;
-    else process.env.LOGRA_TIME = prevTime;
+    if (prevJson === undefined) delete process.env.LUMELOG_JSON;
+    else process.env.LUMELOG_JSON = prevJson;
+    if (prevTime === undefined) delete process.env.LUMELOG_TIME;
+    else process.env.LUMELOG_TIME = prevTime;
   }
 });

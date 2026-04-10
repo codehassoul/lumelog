@@ -48,7 +48,7 @@ function withChildMetadata(args, metadata) {
 }
 
 function stdoutOnly() {
-  return process.env.LOGRA_STDOUT_ONLY === "1";
+  return process.env.LUMELOG_STDOUT_ONLY === "1";
 }
 
 function resolveLevel(level) {
@@ -58,9 +58,9 @@ function resolveLevel(level) {
 }
 
 function currentLevel() {
-  return process.env.LOGRA_LEVEL == null
+  return process.env.LUMELOG_LEVEL == null
     ? undefined
-    : resolveLevel(process.env.LOGRA_LEVEL);
+    : resolveLevel(process.env.LUMELOG_LEVEL);
 }
 
 function currentLevelThreshold() {

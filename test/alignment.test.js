@@ -59,8 +59,8 @@ test("scoped leveled and plain share column for same marker", () => {
 });
 
 test("timestamps preserve one shared message column", () => {
-  const prev = process.env.LOGRA_TIME;
-  process.env.LOGRA_TIME = "1";
+  const prev = process.env.LUMELOG_TIME;
+  process.env.LUMELOG_TIME = "1";
   try {
     const marker = "#";
     const lines = [
@@ -77,7 +77,7 @@ test("timestamps preserve one shared message column", () => {
     assert.ok(cols.every((c) => c === cols[0]));
     assert.match(lines[0], /^\[\d{2}:\d{2}:\d{2}\] /);
   } finally {
-    if (prev === undefined) delete process.env.LOGRA_TIME;
-    else process.env.LOGRA_TIME = prev;
+    if (prev === undefined) delete process.env.LUMELOG_TIME;
+    else process.env.LUMELOG_TIME = prev;
   }
 });

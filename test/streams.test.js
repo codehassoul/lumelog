@@ -35,9 +35,9 @@ test("error-like aliases use console.error; others use console.log", () => {
   assert.match(errCalls[2], /^\S+ ERROR\s+f$/);
 });
 
-test("LOGRA_STDOUT_ONLY=1 sends error and warn to console.log", () => {
-  const prev = process.env.LOGRA_STDOUT_ONLY;
-  process.env.LOGRA_STDOUT_ONLY = "1";
+test("LUMELOG_STDOUT_ONLY=1 sends error and warn to console.log", () => {
+  const prev = process.env.LUMELOG_STDOUT_ONLY;
+  process.env.LUMELOG_STDOUT_ONLY = "1";
   const logCalls = [];
   const errCalls = [];
   const ol = console.log;
@@ -50,8 +50,8 @@ test("LOGRA_STDOUT_ONLY=1 sends error and warn to console.log", () => {
   } finally {
     console.log = ol;
     console.error = oe;
-    if (prev === undefined) delete process.env.LOGRA_STDOUT_ONLY;
-    else process.env.LOGRA_STDOUT_ONLY = prev;
+    if (prev === undefined) delete process.env.LUMELOG_STDOUT_ONLY;
+    else process.env.LUMELOG_STDOUT_ONLY = prev;
   }
   assert.deepEqual(errCalls, []);
   assert.match(logCalls[0], /^\S+ WARN\s+w$/);
@@ -68,15 +68,15 @@ test("formatting stays identical when stderr is forced to stdout", () => {
     restore();
   }
 
-  const prev = process.env.LOGRA_STDOUT_ONLY;
-  process.env.LOGRA_STDOUT_ONLY = "1";
+  const prev = process.env.LUMELOG_STDOUT_ONLY;
+  process.env.LUMELOG_STDOUT_ONLY = "1";
   restore = captureConsole(stdoutOnlyCalls, stripAnsi);
   try {
     log.error("hello");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_STDOUT_ONLY;
-    else process.env.LOGRA_STDOUT_ONLY = prev;
+    if (prev === undefined) delete process.env.LUMELOG_STDOUT_ONLY;
+    else process.env.LUMELOG_STDOUT_ONLY = prev;
   }
 
   assert.equal(stderrCalls.length, 1);

@@ -208,7 +208,7 @@ function applyScope(scope, body) {
 }
 
 function timestampEnabled() {
-  return process.env.LOGRA_TIME === "1";
+  return process.env.LUMELOG_TIME === "1";
 }
 
 function formatTimestamp(date = new Date()) {
@@ -228,7 +228,7 @@ function withTimestamp(line) {
 }
 
 function jsonEnabled() {
-  return process.env.LOGRA_JSON === "1";
+  return process.env.LUMELOG_JSON === "1";
 }
 
 function toJsonLine(level, message, scope, stack, metadata) {

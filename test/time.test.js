@@ -106,9 +106,9 @@ test("double timeEnd after completed logs error second time", () => {
   assert.match(calls[2], /^\S+ ERROR\s+once: no active timer$/);
 });
 
-test("LOGRA_LEVEL=info suppresses TIME but keeps DONE", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "info";
+test("LUMELOG_LEVEL=info suppresses TIME but keeps DONE", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "info";
   const calls = [];
   const restore = captureConsole(calls, stripAnsi);
   try {
@@ -116,16 +116,16 @@ test("LOGRA_LEVEL=info suppresses TIME but keeps DONE", () => {
     log.timeEnd("fetch");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 1);
   assert.match(calls[0], /^\S+ DONE\s+fetch completed in \d+ms$/);
 });
 
-test("LOGRA_LEVEL=done behaves like step for timer output", () => {
-  const prev = process.env.LOGRA_LEVEL;
-  process.env.LOGRA_LEVEL = "done";
+test("LUMELOG_LEVEL=done behaves like step for timer output", () => {
+  const prev = process.env.LUMELOG_LEVEL;
+  process.env.LUMELOG_LEVEL = "done";
   const calls = [];
   const restore = captureConsole(calls, stripAnsi);
   try {
@@ -133,8 +133,8 @@ test("LOGRA_LEVEL=done behaves like step for timer output", () => {
     log.timeEnd("fetch");
   } finally {
     restore();
-    if (prev === undefined) delete process.env.LOGRA_LEVEL;
-    else process.env.LOGRA_LEVEL = prev;
+    if (prev === undefined) delete process.env.LUMELOG_LEVEL;
+    else process.env.LUMELOG_LEVEL = prev;
   }
   assert.equal(calls.length, 2);
   assert.match(calls[0], /^\S+ TIME\s+fetch started$/);
