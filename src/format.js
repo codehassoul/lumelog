@@ -37,7 +37,7 @@ const INSPECT_METADATA = Object.freeze({
 
 function maybeTruncate(text) {
   if (text.length <= MAX_BODY_CHARS) return text;
-  return text.slice(0, MAX_BODY_CHARS) + "\n… [lograjs: truncated]";
+  return text.slice(0, MAX_BODY_CHARS) + "\n… [truncated]";
 }
 
 function isStyledPayload(raw) {
@@ -103,7 +103,7 @@ function serializeRaw(message) {
     try {
       return inspect(message, INSPECT_SHALLOW);
     } catch {
-      return "[lograjs] unable to format message";
+      return "[unable to format message]";
     }
   }
 }

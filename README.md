@@ -1,6 +1,6 @@
-# lograjs
+# lumelog
 
-[![npm version](https://img.shields.io/npm/v/lograjs.svg)](https://www.npmjs.com/package/lograjs)
+[![npm version](https://img.shields.io/npm/v/lumelog.svg)](https://www.npmjs.com/package/lumelog)
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-339933)
 [![test](https://github.com/codehassoul/logra/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/codehassoul/logra/actions/workflows/test.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -12,15 +12,15 @@ Human-first terminal logging for CLIs, scripts, and developer-facing services.
 ## Install
 
 ```bash
-npm install lograjs
+npm install lumelog
 ```
 
 Requires Node.js 18+.
-ESM-only. Use `import log from "lograjs"`.
+ESM-only. Use `import log from "lumelog"`.
 
 ## Mental Model
 
-Think of `lograjs` like this:
+Think of `lumelog` like this:
 
 - `log(...)` is your better `console.log(...)`
 - `log.info()`, `log.warn()`, `log.error()` add readable levels
@@ -28,7 +28,7 @@ Think of `lograjs` like this:
 - `log.child({...})` creates a logger with metadata attached to every line
 
 ```js
-import log from "lograjs";
+import log from "lumelog";
 
 log("Starting sync for %s", projectName);
 log.info("User fetched", { userId: 123 });
@@ -43,7 +43,7 @@ reqLog.info("Handled request");
 
 `console.log` is flexible, but terminal output gets hard to scan fast.
 
-With `logra` you get:
+With `lumelog` you get:
 
 - readable levels without hand-written prefixes
 - cleaner object and error output
@@ -62,7 +62,7 @@ log.info("User fetched", user, { requestId });
 - internal tools
 - dev-focused services
 
-If a human is reading the terminal, `logra` is a good fit.
+If a human is reading the terminal, `lumelog` is a good fit.
 
 ## What It Is Not
 

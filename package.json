@@ -1,5 +1,5 @@
 {
-  "name": "lograjs",
+  "name": "lumelog",
   "version": "1.0.0",
   "description": "Human-first Node.js logger optimized for terminal readability",
   "type": "module",
