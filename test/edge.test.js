@@ -45,15 +45,15 @@ test("deep nesting is capped by inspect depth", () => {
 test("huge string is truncated", () => {
   const huge = "x".repeat(60_000);
   const plain = stripAnsi(formatPlain(huge));
-  assert.ok(plain.includes("… [logra: truncated]"));
+  assert.ok(plain.includes("… [lograjs: truncated]"));
   assert.ok(plain.length < huge.length);
 });
 
-test("huge object values are bounded (inspect + optional logra cap)", () => {
+test("huge object values are bounded (inspect + optional lograjs cap)", () => {
   const big = { s: "y".repeat(60_000) };
   const plain = stripAnsi(formatLevel("info", big));
   assert.ok(
-    plain.includes("… [logra: truncated]") ||
+    plain.includes("… [lograjs: truncated]") ||
       plain.includes("more characters"),
   );
   assert.ok(plain.length < 20_000);

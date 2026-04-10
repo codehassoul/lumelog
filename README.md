@@ -1,6 +1,6 @@
-# logra
+# lograjs
 
-[![npm version](https://img.shields.io/npm/v/logra.svg)](https://www.npmjs.com/package/logra)
+[![npm version](https://img.shields.io/npm/v/lograjs.svg)](https://www.npmjs.com/package/lograjs)
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-339933)
 [![test](https://github.com/codehassoul/logra/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/codehassoul/logra/actions/workflows/test.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -12,15 +12,15 @@ Human-first terminal logging for CLIs, scripts, and developer-facing services.
 ## Install
 
 ```bash
-npm install logra
+npm install lograjs
 ```
 
 Requires Node.js 18+.
-ESM-only. Use `import log from "logra"`.
+ESM-only. Use `import log from "lograjs"`.
 
 ## Mental Model
 
-Think of `logra` like this:
+Think of `lograjs` like this:
 
 - `log(...)` is your better `console.log(...)`
 - `log.info()`, `log.warn()`, `log.error()` add readable levels
@@ -28,7 +28,7 @@ Think of `logra` like this:
 - `log.child({...})` creates a logger with metadata attached to every line
 
 ```js
-import log from "logra";
+import log from "lograjs";
 
 log("Starting sync for %s", projectName);
 log.info("User fetched", { userId: 123 });
